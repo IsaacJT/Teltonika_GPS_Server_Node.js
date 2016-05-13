@@ -16,4 +16,5 @@ var db_config = {
     insecureAuth: true
 };
 ```
+* Run npm install
 * Run nodejs gps.js

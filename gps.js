@@ -62,8 +62,8 @@ var isValidIMEI = function (IMEI, socket){
     });
 };
 
-var saveGPS = function ( timestamp, latitude, longitude, altitude, angle, sattelites, speed ) {
-    connection.query('REPLACE into GPS_DATA (timestamp, latitude, longitude, altitude, angle, sattelites, speed ) values (FROM_UNIXTIME(?),?,?,?,?,?,?)', [ timestamp, latitude, longitude, altitude, angle, sattelites, speed ], function(error, rows, fields) {
+var saveGPS = function ( imei, timestamp, latitude, longitude, altitude, angle, sattelites, speed ) {
+    connection.query('REPLACE into GPS_DATA (imei, timestamp, latitude, longitude, altitude, angle, sattelites, speed ) values (?,FROM_UNIXTIME(?),?,?,?,?,?,?)', [ imei,timestamp, latitude, longitude, altitude, angle, sattelites, speed ], function(error, rows, fields) {
         if (error) {
             console.log('Błąd w funkcji saveGPS '+error);
             throw error;
@@ -149,7 +149,7 @@ var s = function (socket) {
                                         var angle = parseInt(data.slice(19,21).toString('hex'), 16);
                                         var sattelites = parseInt(data.slice(21,22).toString('hex'), 16);
                                         var speed = parseInt(data.slice(22,24).toString('hex'), 16);
-                                        saveGPS(timestamp, latitude, longitude, altitude, angle, sattelites, speed);
+                                        saveGPS(socket.imei, timestamp, latitude, longitude, altitude, angle, sattelites, speed);
 
                                         data = data.slice(24);
 

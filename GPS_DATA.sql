@@ -9,6 +9,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `GPS_DATA`;
 CREATE TABLE `GPS_DATA` (
+  `imei` varchar(15) NOT NULL,
   `timestamp` datetime NOT NULL,
   `savetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `latitude` int(11) NOT NULL,
@@ -17,7 +18,7 @@ CREATE TABLE `GPS_DATA` (
   `angle` int(11) DEFAULT NULL,
   `sattelites` int(11) DEFAULT NULL,
   `speed` int(11) DEFAULT NULL,
-  PRIMARY KEY (`timestamp`,`longitude`,`latitude`),
+  PRIMARY KEY (`timestamp`,`longitude`,`latitude`,`imei`),
   UNIQUE KEY `timestamp_idx` (`timestamp`) USING BTREE
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
