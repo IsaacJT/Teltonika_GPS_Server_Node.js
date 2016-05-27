@@ -71,8 +71,8 @@ var saveGPS = function ( imei, timestamp, latitude, longitude, altitude, angle, 
     });
 };
 
-var saveIO = function ( bytes, timestamp, id, value ) {
-    connection.query('REPLACE into IO_DATA_'+bytes+' (timestamp, id, value ) values (FROM_UNIXTIME(?),?,?)', [ timestamp, id, value ], function(error, rows, fields) {
+var saveIO = function ( imei, bytes, timestamp, id, value ) {
+    connection.query('REPLACE into IO_DATA_'+bytes+' (imei, timestamp, id, value ) values (?,FROM_UNIXTIME(?),?,?)', [ imei, timestamp, id, value ], function(error, rows, fields) {
         if (error) {
             console.log('Błąd w funkcji saveIO '+error);
             throw error;
@@ -94,7 +94,7 @@ var s = function (socket) {
             for (var i = 0; i < n_byte_io; i++) {
                 io_id = parseInt(data.slice(1 + (i*(n_bytes+1)), 2 + (i*(n_bytes+1))).toString('hex'), 16);
                 io_value = parseInt(data.slice(2 + (i*(n_bytes+1)), (2 + n_bytes) + (i*(n_bytes+1))).toString('hex'), 16);
-                saveIO(n_bytes, timestamp, io_id, io_value);
+                saveIO(socket.imei, n_bytes, timestamp, io_id, io_value);
             }
             data = data.slice(1 + (n_byte_io * (1 + n_bytes)));
         };
