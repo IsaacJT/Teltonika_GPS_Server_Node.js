@@ -15,7 +15,6 @@ CREATE TABLE `GPS_DATA` (
   `sattelites` int(11) DEFAULT NULL,
   `speed` int(11) DEFAULT NULL,
   PRIMARY KEY (`imei`,`timestamp`,`longitude`,`latitude`),
-  UNIQUE KEY `timestamp` (`timestamp`) USING BTREE,
   KEY `imei` (`imei`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
